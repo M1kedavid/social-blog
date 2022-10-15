@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="mt-3">Account Details</h1>
+<div class="row">
+<div class="col-lg-4">
+  <div class="card mt-3" style="width: 18rem;">
+    {% if user.id == userabout.user.id %}
+      <div class="card-img-top image">
+        {% if userabout.profile_pic %}
+          <img src="{{userabout.profile_pic.url}}" class="rounded-circle mx-auto p-3 image__img" alt="profile_pic" width=200 height=200>
+        {% else %}
+          <img src="{% static 'accounts/images/default_profile_pic.png' %}" class="rounded-circle mx-auto p-3 image__img" alt="profile_pic" width=200 height=200>
+        {% endif %}
+        <a  href="{% url 'accounts:edit_profile' %}">
+        <div class="image__overlay">
+          <div class="image__title">Hello, {{userabout.user.username}}</div>
+          <p class="image__description">Click to edit profile</p>
+        </div>
+        </a>
+      </div>
+    {% else %}
+    {% if userabout.profile_pic %}
+      <img src="{{userabout.profile_pic.url}}" class="rounded-circle mx-auto p-3 image__img" alt="profile_pic" width=200 height=200>
+    {% else %}
+      <img src="{% static 'accounts/images/default_profile_pic.png' %}" class="rounded-circle mx-auto p-3 image__img" alt="profile_pic" width=200 height=200>
+    {% endif %}
+    {% endif %}
+    
+    <div class="card-body">
+      <h3 class="card-title text-primary font-weight-bold">Bio</h3>
+      {% if userabout.bio %}
+        <p class="card-text">{{userabout.bio}}</p>
+      {% endif %}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><span class="text-primary font-weight-bold">Username: </span>{{userabout.user.username}}</li>
+      <li class="list-group-item"><span class="text-primary font-weight-bold">Email: </span>{{userabout.user.email}}</li>
+    </ul>
+    {% if user.id == userabout.user.id %}
+      <a href="{%url 'accounts:password_change' %}" class="btn btn-secondary mt-3">Change Password</a>
+    {% endif %}
+  </div>
+</div>
+<div class="col-lg-8 ml-auto">
+  {% for post in post_list %}
+    {% include 'posts/_post.html' %}
+  {% endfor %}
+</div>
+</div>
+{% endblock content %}

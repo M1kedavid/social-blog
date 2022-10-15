@@ -1,0 +1,35 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+<div class="col-12 mt-4">
+  <div class="content">
+    <h2>My Groups</h2>
+    <p>Here are the groups you joined</p>
+  </div>
+</div>
+{% endblock pregroup %}
+
+{% block group_content %}
+<div class="col-md-8 mt-4">
+  <div class="list_group">
+    {% if user_groups %}
+    {% for group in user_groups %}
+      <a href="{% url 'groups:single' slug=group.slug %}" class="list-group-item text-decoration-none">
+        <h3 class="title">{{group.name}}</h3>
+        <div class="list-group-item-text container-fluid p-0">
+          {{group.description_html|safe}}
+          <div class="row">
+            <div class="col-md-4">
+              <span class="badge badge-dark badge-pill">{{group.members.count}}</span>
+              member{{group.members.count|pluralize}}
+            </div>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+    {% else %}
+      <h2>You haven't joined any groups yet!</h2>
+    {% endif %}
+  </div>
+</div>
+{% endblock group_content %}

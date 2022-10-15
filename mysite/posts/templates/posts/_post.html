@@ -1,0 +1,35 @@
+<div class="container post rounded p-2">
+  <a class="text-decoration-none" href="{% url 'posts:post_detail' pk=post.pk%}"><h1>{{post.title}}</h1></a>
+  <p class="text-primary">{{post.likes.count}} Like{{post.likes.count|pluralize}}</p>
+  {% if user.is_authenticated and post.user == user and not hide_delete %}
+		<!-- Button trigger modal -->
+    <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+      <span class="bi bi-x-lg"></span>
+    </button>
+    <a href="{%url 'posts:edit' pk=post.pk%}" class="btn btn-outline-warning btn-sm"><i class="bi bi-pencil"></i></a>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this post?
+          </div>
+          <div class="modal-footer mr-auto">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{% url 'posts:delete' pk=post.pk %}" method="POST">
+              {% csrf_token %}
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+	{% endif %}
+  <p class="mt-4 text-secondary">{{post.created_at}} - <a href="{% url 'accounts:about' pk=post.user.userprofile.pk %}">{{post.user.username}}</a></p>
+</div>

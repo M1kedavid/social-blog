@@ -1,0 +1,13 @@
+<div id="likesarea" role="group">
+  <p>
+      <button class="btn btn-outline-primary btn-sm" hx-post="{% url 'posts:like_post' post.id %}" id="like-button" 
+        hx-target="#likesarea" hx-swap="outerHTML">
+        {% if request.user in post.likes.all %}
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+        {% else %}
+          <i class="bi bi-hand-thumbs-up"></i>
+        {% endif %}
+      </button>
+      <span class="text-primary">{{ post.likes.count }} Like{{post.likes.count|pluralize}}</span>
+  </p> 
+</div>

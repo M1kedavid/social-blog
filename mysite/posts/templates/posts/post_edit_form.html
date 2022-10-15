@@ -1,0 +1,17 @@
+{% extends 'posts/post_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block post_content %}
+<div class="col-lg-8 col-md-10 mx-auto">
+  <div class="card border-primary mt-5">
+    <div class="card-body">
+      <h1 class="text-center text-primary font-weight-bold display-4">Edit post...</h1>
+      <form method="POST">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Update" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock post_content %}

@@ -1,0 +1,17 @@
+{% extends 'groups/group_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block group_content %}
+<div class="col-lg-8 col-md-10 mx-auto">
+  <div class="card border-primary mt-5">
+    <div class="card-body">
+      <h1 class="text-center text-primary font-weight-bold display-4">Create Group</h1>
+      <form action="{%url 'groups:create' %}" method='POST'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Create" class="btn btn-primary btn-lg">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock  %}
